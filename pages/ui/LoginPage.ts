@@ -1,6 +1,6 @@
 import {Locator, Page} from "@playwright/test"
 
-class LoginPage{
+export class LoginPage{
     readonly page: Page;
     readonly  username_textbox_testid: Locator;
     readonly password_textbox_testid: Locator;
@@ -20,7 +20,7 @@ class LoginPage{
     }
 
     async fill_password(password: string): Promise<void>{
-        await this.username_textbox_testid.fill(password);
+        await this.password_textbox_testid.fill(password);
     }
 
     async click_login_button(): Promise<void>{
