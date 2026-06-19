@@ -4,23 +4,18 @@ import { LoginPage } from "../../pages/ui/LoginPage"
 import {USERS} from "../../test_case_data/login_test_data"
 
 
-// test ("verify cart badge value", async({page})=>{
-//     let product_page = new ProductsPage(page)
-//     let loginPage = new LoginPage(page)
+test ("verify cart badge value", async({page})=>{
+    let product_page = new ProductsPage(page)
+    let loginPage = new LoginPage(page)
 
-//     await page.goto("https://www.saucedemo.com/")
-//     await loginPage.fill_password("secret_sauce");
-//     await loginPage.fill_username("standard_user");
-//     await loginPage.click_login_button();
+    await page.goto("https://www.saucedemo.com/")
+    await loginPage.login(USERS.STANDARD.username, USERS.STANDARD.password);
 
-//     await product_page.add_item_to_cart_by_index(0)
-//     await product_page.add_item_to_cart_by_index(1)
+    await product_page.add_item_to_cart_by_index(0)
+    await product_page.add_item_to_cart_by_index(1)
 
-//     await expect(product_page.shopping_cart_badge_testid).toHaveText("2");
-
-    
-
-// })
+    await expect(product_page.shopping_cart_badge_testid).toHaveText("2");
+})
 
 
 
