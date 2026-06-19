@@ -17,7 +17,7 @@ A Playwright + TypeScript test suite covering UI and API testing, using the Page
 ## Installation
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Suryaekan/plawyright-ts.git
 cd playwright-ts
 npm install
 npx playwright install
