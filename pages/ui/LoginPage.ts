@@ -29,4 +29,9 @@ export class LoginPage{
         await this.login_button_testid.click();
     }
 
+    async login(username: string, password: string){
+        await this.fill_username(username);
+        await this.fill_password(password);
+        await this.click_login_button();
+    }
 }
