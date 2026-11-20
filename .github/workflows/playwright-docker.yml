@@ -28,12 +28,10 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t playwright-automation .
-
       # 4. Create directories for reports
       - name: Prepare report directories
         run: |
           mkdir -p playwright-report test-results
-
       # 5. Execute UI and API tests
       - name: Run Playwright tests in Docker
         run: |
@@ -44,7 +42,6 @@ jobs:
             -v "${{ github.workspace }}/playwright-report:/app/playwright-report" \
             -v "${{ github.workspace }}/test-results:/app/test-results" \
             playwright-automation
-
       # 6. Upload HTML report
       - name: Upload Playwright HTML Report
         if: always()
