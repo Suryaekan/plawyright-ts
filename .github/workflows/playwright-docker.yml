@@ -1,0 +1,63 @@
+
+name: Playwright Docker Automation
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  playwright-tests:
+    name: Run UI and API Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Verify Docker is available
+      - name: Check Docker
+        run: docker --version
+
+      # 3. Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t playwright-automation .
+      # 4. Create directories for reports
+      - name: Prepare report directories
+        run: |
+          mkdir -p playwright-report test-results
+      # 5. Execute UI and API tests
+      - name: Run Playwright tests in Docker
+        run: |
+          docker run --rm \
+            --init \
+            --ipc=host \
+            -e CI=true \
+            -v "${{ github.workspace }}/playwright-report:/app/playwright-report" \
+            -v "${{ github.workspace }}/test-results:/app/test-results" \
+            playwright-automation
+      # 6. Upload HTML report
+      - name: Upload Playwright HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: playwright-report/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      # 7. Upload test results, traces and screenshots
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14
